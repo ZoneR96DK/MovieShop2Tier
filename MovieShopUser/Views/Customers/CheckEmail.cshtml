@@ -1,0 +1,35 @@
+﻿@model MovieShopDLL.Entities.Movie
+
+<link rel="stylesheet" type="text/css" href="../../Content/verifyEmail.css"> 
+
+<div class="container">
+        <div class="row main">
+            <div class="panel-heading">
+                <div class="panel-title text-center">
+                    <h1 class="title">MovieShop v0.1</h1>
+                    <hr />
+                </div>
+            </div>
+            <div class="main-login main-center">
+                <form class="form-horizontal" method="post" action="../CheckEmail">
+                    
+                    <div class="form-group">
+                        <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <input type="hidden" value="@Model.Id" name="movieId"/>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+                            </div>
+                            <small class="text-danger">@ViewBag.Message</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg btn-block login-button" type="submit">Submit.</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+    <script type="text/javascript" src="../../Scripts/bootstrap.js"></script>

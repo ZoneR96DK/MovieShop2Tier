@@ -1,0 +1,104 @@
+﻿@model MovieShopDLL.Entities.Movie
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 my-header">
+            @if (@Model.TrailerUrl != null)
+            {
+                <h2 class="h2-frontIndexUser">Watch trailer for @Model.Title <a href="@Model.TrailerUrl" target="_blank">here</a>.
+                </h2>
+            }
+            else
+            {
+                <h2 class="h2-frontIndexUser">
+                    There is no trailer for this film.
+                </h2>
+            }
+
+
+        </div>
+    </div>
+</div>
+@*<div>
+    <h4>Movie</h4>
+    <hr/>
+    <img src="@Model.ImageUrl"/><br/><br/>
+
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre)
+        </dt>
+
+        <dd>
+            @Model.Genre.Name
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrailerUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrailerUrl)
+        </dd>
+
+    </dl>
+</div>*@
+
+
+<div class="container-for-random-films">
+    <div class="row">
+        <table class="col-md-12">
+            <tr>
+                <th class="col-md-2" rowspan="4"><img src="@Model.ImageUrl" /></th>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Title)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Title)</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Year)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Year.Year)</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Genre)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Genre.Name)</td>
+            </tr>
+            <tr>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Price)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Price)</td>
+            </tr>
+            <tr>
+                <td colspan="3" class="col-md-12 text-right"><p>
+                    <button type="button" class="btn btn-default">@Html.ActionLink("Back to List", "Index")</button>
+                    <a href="../../Customers/CheckEmail/@Model.Id" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> Buy this film</a>
+                    
+</p></td>
+            </tr>
+        </table>
+    </div>
+</div><br/><br/>
+

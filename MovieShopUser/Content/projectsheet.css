@@ -1,0 +1,91 @@
+﻿h2 {
+    font-family: "Gill Sans MT", Georgia, Serif;
+    font-size: 1.9vw;
+    margin: 0 auto;
+}
+
+.h2-frontIndexUser {
+    margin-left: 13%;
+}
+
+.container-fluid .row .col-md-12{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    font-size:  1.5vw;
+    font-family: "Gill Sans MT", Georgia, Serif;
+    margin-bottom: 0.5%;
+   
+    
+}
+
+.container-fluid .row .my-header {
+    background: #f5f5f5 url(http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/Clapper-icon.png) no-repeat 5%;
+    background-size: 80px;
+
+}
+
+.col-md-12 {
+    background: #f5f5f5;
+
+}
+
+.container-for-random-films {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    position: relative;
+    background: #f5f5f5;
+}
+
+.container-for-search-films {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 60%;
+    background: #f5f5f5;
+}
+
+.col-md-6 p{
+    text-align: center;
+    font-size: 1.2vw;
+    padding-top: 9rem;
+   
+    
+}
+
+.left_indexPage {
+    
+    padding: 0 10px 0 0;
+}
+
+.right_indexPage {
+    
+    padding: 0 0 0 10px;
+}
+
+.button-frontIndex {
+     margin-bottom: 9rem;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+
+}
+
+.col-md-2{
+    background: #f5f5f5;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    width: 19%;
+    margin-right: 1%;
+}
+
+.container-random.films  {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+
+.movie_img_165x200{
+    max-width: 165px;
+    max-height: 200px;
+}

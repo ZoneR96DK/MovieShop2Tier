@@ -1,0 +1,106 @@
+﻿@model MovieShopUser.Models.OrderCheckoutView
+
+<link rel="stylesheet" type="text/css" href="../../Content/verifyEmail.css">
+
+<div class="container">
+    <div class="row main">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                <h1 class="title">MovieShop v0.1</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="main-login main-center">
+        <form class="form-horizontal" method="post" action="../Customers/ConfirmCustomerDetails">
+           
+            
+<div class="form-group">
+
+                    <div class="cols-sm-10">
+                        <input type="hidden" value="@Model.Movie.Id" name="movieId"/>
+                        @if (@Model.Customer != null) {
+                            <input type="hidden" value="@Model.Customer.Id" name="customerId"/>
+
+                        }
+                        <input type="hidden" value="@if (Model.Customer != null)
+                                                    {@Model.Customer.Email
+                                                    }
+                                                    else
+                                                    {@Model.Email
+                                                    }" name="Email"/>
+                        <small class="text-danger">@ViewBag.Message</small><br/>
+                        <label for="email" class="cols-sm-2 control-label">Email</label>
+                        <input type="text" class="form-control" name="Email" placeholder="Email" id="email" value="@if (Model.Customer != null)
+                                                                                                                   {@Model.Customer.Email
+                                                                                                                   }
+                                                                                                                   else
+                                                                                                                   {@Model.Email
+                                                                                                                   }" disabled/>
+                        
+                                                            <label for="firstname" class="cols-sm-2 control-label">First name</label>
+                        <input type="text" class="form-control" name="FirstName" placeholder="First Name" id="firstname" value="@if (Model.Customer != null)
+                                                                                                                                {
+                                                                                                                                    @Model.Customer.FirstName
+                            }
+                                                                                                                                else
+                                                                                                                                {@Html.Raw("")}" required=""/>
+                                                                                                                               
+                        <label for="firstname" class="cols-sm-2 control-label">Last name</label>
+                        <input type="text" class="form-control" name="LastName" placeholder="Last Name" id="lastname" value="@if (Model.Customer != null)
+                                                                                                                             {
+                                                                                                                                 @Model.Customer.LastName
+                                                                                                                             }
+                                                                                                                             else
+                                                                                                                             {@Html.Raw("")}" required/>
+                        <br/><label for="StreetName" class="cols-sm-2 control-label">Street name</label>
+                        <input type="text" class="cols-sm-2 form-control" name="StreetName" placeholder="StreetName" id="address.StreetName" value="@if (Model.Customer != null)
+                                                                                                                                            {
+                                                                                                                                                @Model.Customer.Address.StreetName
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {@Html.Raw("")}" required/>
+                        <label for="StreetNumber" class="cols-sm-2 control-label">Street number</label>
+                        <input type="text" class="cols-sm-2 form-control" name="StreetNumber" placeholder="StreetNumber" id="address.StreetNumber" value="@if (Model.Customer != null)
+                                                                                                                                                  {
+                                                                                                                                                      @Model.Customer.Address.StreetNumber
+                                                                                                                                                  }
+                                                                                                                                                  else
+                                                                                                                                                  {@Html.Raw("")}" required/>
+                        <label for="City" class="cols-sm-2 control-label">City</label>
+                        <input type="text" class="cols-sm-2 form-control" name="City" placeholder="City" id="address.City" value="@if (Model.Customer != null)
+                                                                                                                          {
+                                                                                                                              @Model.Customer.Address.City
+                                                                                                                          }
+                                                                                                                          else
+                                                                                                                          {@Html.Raw("")}" required/>
+                        <label for="PostalCode" class="cols-sm-2 control-label">PostalCode</label>
+                        <input type="text" class="cols-sm-2 form-control" name="PostalCode" placeholder="PostalCode" id="address.PostalCode" value="@if (Model.Customer != null)
+                                                                                                                                            {
+                                                                                                                                                @Model.Customer.Address.PostalCode
+                                                                                                                                            }
+                                                                                                                                            else
+                                                                                                                                            {@Html.Raw("")}" required/>
+                        <label for="Country" class="cols-sm-2 control-label">Country</label>
+                        <input type="text" class="cols-sm-2 form-control" name="Country" placeholder="Country" id="address.Country" value="@if (Model.Customer != null)
+                                                                                                                                   {
+                                                                                                                                       @Model.Customer.Address.Country
+                                                                                                                                   }
+                                                                                                                                   else
+                                                                                                                                   {@Html.Raw("")}" required/>
+                        <br/><br/>
+                        <u>Your order:</u><br/>
+                        <b>Movie title:</b> @Model.Movie.Title<br/>
+                        <b>Genre:</b> @Model.Movie.Genre.Name<br/>
+                        <b>Price:</b> @Model.Movie.Price DKK
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block login-button" type="submit">Continue.</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="../../Scripts/bootstrap.js"></script>
