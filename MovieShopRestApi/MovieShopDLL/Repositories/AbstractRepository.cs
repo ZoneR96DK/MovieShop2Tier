@@ -9,6 +9,7 @@ namespace MovieShopDLL.Repositories
         {
             using (var db = new MovieShopContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 var addedItem = Create(db, item);
                 db.SaveChanges();
                 return addedItem;
@@ -17,8 +18,10 @@ namespace MovieShopDLL.Repositories
 
         public T Read(int id)
         {
+
             using (var db = new MovieShopContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 return Read(db, id);
             }
         }
@@ -27,6 +30,7 @@ namespace MovieShopDLL.Repositories
         {
             using (var db = new MovieShopContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 return Read(db);
             }
         }
@@ -35,6 +39,7 @@ namespace MovieShopDLL.Repositories
         {
             using (var db = new MovieShopContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 return Update(db, item);
             }
         }
@@ -43,6 +48,7 @@ namespace MovieShopDLL.Repositories
         {
             using (var db = new MovieShopContext())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 Delete(db, id);
             }
         }

@@ -30,7 +30,7 @@ namespace MovieShopDLL.Repositories
 
         public override List<Genre> Read(MovieShopContext db)
         {
-            return db.Genres.ToList();
+            return db.Genres.Include(g => g.Movies).ToList();
         }
 
         public override Genre Update(MovieShopContext db, Genre genre)

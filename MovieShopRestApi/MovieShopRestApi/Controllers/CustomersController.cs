@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -15,19 +16,20 @@ namespace MovieShopRestApi.Controllers
 {
     public class CustomersController : ApiController
     {
-        private MovieShopContext db = new MovieShopContext();
+
+        private IRepository<Customer> _cr = DllFacade.GetCustomerRepository();
 
         // GET: api/Customers
-        public IQueryable<Customer> GetCustomers()
+        public List<Customer> GetCustomers()
         {
-            return db.Customers;
+            return _cr.Read();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _cr.Read(id);
             if (customer == null)
             {
                 return NotFound();
@@ -50,23 +52,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _cr.Update(customer);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -80,8 +66,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _cr.Create(customer);
 
             return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
@@ -90,30 +75,17 @@ namespace MovieShopRestApi.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _cr.Read(id);
             if (customer == null)
             {
                 return NotFound();
             }
 
-            db.Customers.Remove(customer);
-            db.SaveChanges();
+            _cr.Delete(id);
 
             return Ok(customer);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

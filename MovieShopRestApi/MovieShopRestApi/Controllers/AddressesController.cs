@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -15,19 +16,19 @@ namespace MovieShopRestApi.Controllers
 {
     public class AddressesController : ApiController
     {
-        private MovieShopContext db = new MovieShopContext();
+        private IRepository<Address> _ar = DllFacade.GetAddressRepository();
 
         // GET: api/Addresses
-        public IQueryable<Address> GetAddresses()
+        public List<Address> GetAddresses()
         {
-            return db.Addresses;
+            return _ar.Read();
         }
 
         // GET: api/Addresses/5
         [ResponseType(typeof(Address))]
         public IHttpActionResult GetAddress(int id)
         {
-            Address address = db.Addresses.Find(id);
+            Address address = _ar.Read(id);
             if (address == null)
             {
                 return NotFound();
@@ -50,23 +51,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(address).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AddressExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _ar.Update(address);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -80,23 +65,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Addresses.Add(address);
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                if (AddressExists(address.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _ar.Create(address);
 
             return CreatedAtRoute("DefaultApi", new { id = address.Id }, address);
         }
@@ -105,30 +74,17 @@ namespace MovieShopRestApi.Controllers
         [ResponseType(typeof(Address))]
         public IHttpActionResult DeleteAddress(int id)
         {
-            Address address = db.Addresses.Find(id);
+            Address address = _ar.Read(id);
             if (address == null)
             {
                 return NotFound();
             }
 
-            db.Addresses.Remove(address);
-            db.SaveChanges();
+            _ar.Delete(id);
 
             return Ok(address);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool AddressExists(int id)
-        {
-            return db.Addresses.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

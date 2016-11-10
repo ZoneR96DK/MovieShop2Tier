@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -15,19 +16,19 @@ namespace MovieShopRestApi.Controllers
 {
     public class MoviesController : ApiController
     {
-        private MovieShopContext db = new MovieShopContext();
+        private IRepository<Movie> _mr = DllFacade.GetMovieRepository();
 
         // GET: api/Movies
-        public IQueryable<Movie> GetMovies()
+        public List<Movie> GetMovies()
         {
-            return db.Movies;
+            return _mr.Read();
         }
 
         // GET: api/Movies/5
         [ResponseType(typeof(Movie))]
         public IHttpActionResult GetMovie(int id)
         {
-            Movie movie = db.Movies.Find(id);
+            Movie movie = _mr.Read(id);
             if (movie == null)
             {
                 return NotFound();
@@ -50,23 +51,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(movie).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MovieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _mr.Update(movie);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -80,8 +65,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Movies.Add(movie);
-            db.SaveChanges();
+            _mr.Create(movie);
 
             return CreatedAtRoute("DefaultApi", new { id = movie.Id }, movie);
         }
@@ -90,30 +74,17 @@ namespace MovieShopRestApi.Controllers
         [ResponseType(typeof(Movie))]
         public IHttpActionResult DeleteMovie(int id)
         {
-            Movie movie = db.Movies.Find(id);
+            Movie movie = _mr.Read(id);
             if (movie == null)
             {
                 return NotFound();
             }
 
-            db.Movies.Remove(movie);
-            db.SaveChanges();
+            _mr.Delete(id);
 
             return Ok(movie);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool MovieExists(int id)
-        {
-            return db.Movies.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }

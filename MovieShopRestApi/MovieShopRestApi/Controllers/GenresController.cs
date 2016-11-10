@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -15,19 +16,19 @@ namespace MovieShopRestApi.Controllers
 {
     public class GenresController : ApiController
     {
-        private MovieShopContext db = new MovieShopContext();
+        private IRepository<Genre> _gr = DllFacade.GetGenreRepository();
 
         // GET: api/Genres
-        public IQueryable<Genre> GetGenres()
+        public List<Genre> GetGenres()
         {
-            return db.Genres;
+            return _gr.Read();
         }
 
         // GET: api/Genres/5
         [ResponseType(typeof(Genre))]
         public IHttpActionResult GetGenre(int id)
         {
-            Genre genre = db.Genres.Find(id);
+            Genre genre = _gr.Read(id);
             if (genre == null)
             {
                 return NotFound();
@@ -50,23 +51,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
-            db.Entry(genre).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GenreExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _gr.Update(genre);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -80,8 +65,7 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Genres.Add(genre);
-            db.SaveChanges();
+            _gr.Create(genre);
 
             return CreatedAtRoute("DefaultApi", new { id = genre.Id }, genre);
         }
@@ -90,30 +74,17 @@ namespace MovieShopRestApi.Controllers
         [ResponseType(typeof(Genre))]
         public IHttpActionResult DeleteGenre(int id)
         {
-            Genre genre = db.Genres.Find(id);
+            Genre genre = _gr.Read(id);
             if (genre == null)
             {
                 return NotFound();
             }
 
-            db.Genres.Remove(genre);
-            db.SaveChanges();
+            _gr.Delete(id);
 
             return Ok(genre);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool GenreExists(int id)
-        {
-            return db.Genres.Count(e => e.Id == id) > 0;
-        }
+        
     }
 }
