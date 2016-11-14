@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieShopAPI", "MovieShopRestApi\MovieShopAPI.csproj", "{D25A4471-BC9F-476D-8BE3-EE746BB19543}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieShopRestApi", "MovieShopRestApi\MovieShopRestApi.csproj", "{D25A4471-BC9F-476D-8BE3-EE746BB19543}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieShopDLL", "MovieShopDLL\MovieShopDLL.csproj", "{E42E5F28-AA6B-4EFC-8AA2-66AFF6D2B0B8}"
 EndProject

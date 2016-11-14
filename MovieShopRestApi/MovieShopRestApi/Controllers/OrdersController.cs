@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MovieShopDLL;
-using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
 namespace MovieShopRestApi.Controllers
 {
     public class OrdersController : ApiController
     {
-        private IRepository<Order> _or = DllFacade.GetOrderRepository();
-        
+        private readonly IRepository<Order> _or = DllFacade.GetOrderRepository();
+
         // GET: api/Orders
         public List<Order> GetOrders()
         {
@@ -28,11 +21,9 @@ namespace MovieShopRestApi.Controllers
         [ResponseType(typeof(Order))]
         public IHttpActionResult GetOrder(int id)
         {
-            Order order = _or.Read(id);
+            var order = _or.Read(id);
             if (order == null)
-            {
                 return NotFound();
-            }
 
             return Ok(order);
         }
@@ -42,20 +33,14 @@ namespace MovieShopRestApi.Controllers
         public IHttpActionResult PutOrder(int id, Order order)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
             if (id != order.Id)
-            {
                 return BadRequest("Ids do not match");
-            }
 
-            Order orderToTest = _or.Read(id);
+            var orderToTest = _or.Read(id);
             if (orderToTest == null)
-            {
                 return NotFound();
-            }
 
             _or.Update(order);
 
@@ -67,30 +52,24 @@ namespace MovieShopRestApi.Controllers
         public IHttpActionResult PostOrder(Order order)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-            
+
             _or.Create(order);
 
-            return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
+            return CreatedAtRoute("DefaultApi", new {id = order.Id}, order);
         }
 
         // DELETE: api/Orders/5
         [ResponseType(typeof(Order))]
         public IHttpActionResult DeleteOrder(int id)
         {
-            Order order = _or.Read(id);
+            var order = _or.Read(id);
             if (order == null)
-            {
                 return NotFound();
-            }
 
             _or.Delete(id);
 
             return Ok(order);
         }
-
-        
     }
 }
