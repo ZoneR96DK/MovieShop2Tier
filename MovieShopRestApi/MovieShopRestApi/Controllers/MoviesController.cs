@@ -48,7 +48,7 @@ namespace MovieShopRestApi.Controllers
 
             if (id != movie.Id)
             {
-                return BadRequest();
+                return BadRequest("Ids do not match");
             }
 
             Movie movieToTest = _mr.Read(id);

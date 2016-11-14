@@ -48,13 +48,7 @@ namespace MovieShopRestApi.Controllers
 
             if (id != genre.Id)
             {
-                return BadRequest();
-            }
-
-            Genre genreToTest = _gr.Read(id);
-            if (genreToTest == null)
-            {
-                return NotFound();
+                return BadRequest("Ids do not match");
             }
 
             _gr.Update(genre);

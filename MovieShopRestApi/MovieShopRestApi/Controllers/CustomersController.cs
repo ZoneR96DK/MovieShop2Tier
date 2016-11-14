@@ -49,7 +49,7 @@ namespace MovieShopRestApi.Controllers
 
             if (id != customer.Id)
             {
-                return BadRequest();
+                return BadRequest("Ids do not match");
             }
 
             Customer customerToTest = _cr.Read(id);

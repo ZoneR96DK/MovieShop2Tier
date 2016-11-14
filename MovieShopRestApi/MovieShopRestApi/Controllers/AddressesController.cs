@@ -48,7 +48,7 @@ namespace MovieShopRestApi.Controllers
 
             if (id != address.Id)
             {
-                return BadRequest();
+                return BadRequest("Ids do not match");
             }
 
             Address addressToTest = _ar.Read(id);
