@@ -51,6 +51,12 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
+            Address addressToTest = _ar.Read(id);
+            if (addressToTest == null)
+            {
+                return NotFound();
+            }
+
             _ar.Update(address);
 
             return StatusCode(HttpStatusCode.NoContent);

@@ -51,6 +51,12 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
+            Order orderToTest = _or.Read(id);
+            if (orderToTest == null)
+            {
+                return NotFound();
+            }
+
             _or.Update(order);
 
             return StatusCode(HttpStatusCode.NoContent);

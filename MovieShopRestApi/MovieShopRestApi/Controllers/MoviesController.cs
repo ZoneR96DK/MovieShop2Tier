@@ -51,6 +51,12 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
+            Movie movieToTest = _mr.Read(id);
+            if (movieToTest == null)
+            {
+                return NotFound();
+            }
+
             _mr.Update(movie);
 
             return StatusCode(HttpStatusCode.NoContent);
