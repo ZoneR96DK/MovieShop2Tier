@@ -1,5 +1,6 @@
 using System.Web.Http;
 using System.Web.Mvc;
+using MovieShopRestApi.Areas.HelpPage.App_Start;
 
 namespace MovieShopRestApi.Areas.HelpPage
 {

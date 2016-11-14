@@ -1,4 +1,4 @@
-namespace MovieShopRestApi.Areas.HelpPage
+namespace MovieShopRestApi.Areas.HelpPage.SampleGeneration
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

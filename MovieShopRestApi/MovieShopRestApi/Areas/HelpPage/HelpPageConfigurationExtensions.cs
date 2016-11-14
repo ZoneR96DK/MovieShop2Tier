@@ -13,6 +13,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using MovieShopRestApi.Areas.HelpPage.ModelDescriptions;
 using MovieShopRestApi.Areas.HelpPage.Models;
+using MovieShopRestApi.Areas.HelpPage.SampleGeneration;
 
 namespace MovieShopRestApi.Areas.HelpPage
 {
