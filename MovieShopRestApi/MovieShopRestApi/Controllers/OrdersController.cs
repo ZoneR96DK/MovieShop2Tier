@@ -17,7 +17,7 @@ namespace MovieShopRestApi.Controllers
     public class OrdersController : ApiController
     {
         private IRepository<Order> _or = DllFacade.GetOrderRepository();
-
+        
         // GET: api/Orders
         public List<Order> GetOrders()
         {
@@ -70,7 +70,7 @@ namespace MovieShopRestApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             _or.Create(order);
 
             return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
