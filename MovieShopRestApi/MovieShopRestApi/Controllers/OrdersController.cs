@@ -48,7 +48,7 @@ namespace MovieShopRestApi.Controllers
 
             if (id != order.Id)
             {
-                return BadRequest();
+                return BadRequest("Ids do not match");
             }
 
             Order orderToTest = _or.Read(id);
