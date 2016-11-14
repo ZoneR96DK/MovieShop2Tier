@@ -42,6 +42,8 @@ namespace MovieShopDLL.Repositories
 
         public override void Delete(MovieShopContext db, int id)
         {
+
+            db.Entry(db.Addresses.FirstOrDefault(y => y.Id == id)).State = EntityState.Deleted;
             db.Entry(db.Customers.FirstOrDefault(x => x.Id == id)).State = EntityState.Deleted;
             db.SaveChanges();
         }

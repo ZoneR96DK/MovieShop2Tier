@@ -51,6 +51,12 @@ namespace MovieShopRestApi.Controllers
                 return BadRequest();
             }
 
+            Genre genreToTest = _gr.Read(id);
+            if (genreToTest == null)
+            {
+                return NotFound();
+            }
+
             _gr.Update(genre);
 
             return StatusCode(HttpStatusCode.NoContent);
