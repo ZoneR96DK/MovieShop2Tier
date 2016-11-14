@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
+using MovieShopRestApi;
 using Owin;
 
-[assembly: OwinStartup(typeof(MovieShopRestApi.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
 namespace MovieShopRestApi
 {
