@@ -59,10 +59,11 @@ namespace MovieShopRestApi.Controllers
             return CreatedAtRoute("DefaultApi", new {id = address.Id}, address);
         }
 
-        // DELETE: api/Addresses/5
+        // /DELETE: api/Addresses/5
         [ResponseType(typeof(Address))]
         public IHttpActionResult DeleteAddress(int id)
         {
+            
             var address = _ar.Read(id);
             if (address == null)
                 return NotFound();
