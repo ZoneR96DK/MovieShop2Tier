@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieShopDLL
 {
-    public interface IManager<T>
+    public interface IServiceGateway<T>
     {
         /// <summary>
         /// Create an object.

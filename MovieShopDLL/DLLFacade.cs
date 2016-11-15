@@ -6,35 +6,35 @@ using System.Text;
 using System.Threading.Tasks;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
-using MovieShopDLL.Managers;
+using MovieShopDLL.ServiceGateways;
 
 namespace MovieShopDLL
 {
     public class DllFacade
     {
-        public static IManager<Genre> GetGenreManager()
+        public static IServiceGateway<Genre> GetGenreServiceGateway()
         {
-            return GenreManager.Instance;
+            return GenreServiceGateway.Instance;
         }
 
-        public static IManager<Movie> GetMovieManager()
+        public static IServiceGateway<Movie> GetMovieManager()
         {
-            return MovieManager.Instance;
+            return MovieServiceGateway.Instance;
         }
 
-        public static IManager<Customer> GetCustomerManager()
+        public static IServiceGateway<Customer> GetCustomerManager()
         {
-            return CustomerManager.Instance;
+            return CustomerServiceGateway.Instance;
         }
 
-        public static IManager<Order> GetOrderManager()
+        public static IServiceGateway<Order> GetOrderManager()
         {
-            return OrderManager.Instance;
+            return OrderServiceGateway.Instance;
         }
 
-        public static IManager<Address> GetAddressManager()
+        public static IServiceGateway<Address> GetAddressManager()
         {
-            return AddressManager.Instance;
+            return AddressServiceGateway.Instance;
         }
     }
 }

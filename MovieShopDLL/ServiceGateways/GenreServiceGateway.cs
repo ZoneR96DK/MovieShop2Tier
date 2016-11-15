@@ -4,17 +4,17 @@ using System.Linq;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
-    internal class GenreManager : AbstractManager<Genre>
+    internal class GenreServiceGateway : AbstractServiceGateway<Genre>
     {
-        private static GenreManager _instance;
+        private static GenreServiceGateway _instance;
 
-        private GenreManager()
+        private GenreServiceGateway()
         {
         }
 
-        public static GenreManager Instance => _instance ?? (_instance = new GenreManager());
+        public static GenreServiceGateway Instance => _instance ?? (_instance = new GenreServiceGateway());
 
         public override Genre Create(MovieShopContext db, Genre genre)
         {

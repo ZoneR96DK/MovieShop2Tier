@@ -4,17 +4,17 @@ using System.Linq;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
-    internal class CustomerManager : AbstractManager<Customer>
+    internal class CustomerServiceGateway : AbstractServiceGateway<Customer>
     {
-        private static CustomerManager _instance;
+        private static CustomerServiceGateway _instance;
 
-        private CustomerManager()
+        private CustomerServiceGateway()
         {
         }
 
-        public static CustomerManager Instance => _instance ?? (_instance = new CustomerManager());
+        public static CustomerServiceGateway Instance => _instance ?? (_instance = new CustomerServiceGateway());
 
         public override Customer Create(MovieShopContext db, Customer customer)
         {

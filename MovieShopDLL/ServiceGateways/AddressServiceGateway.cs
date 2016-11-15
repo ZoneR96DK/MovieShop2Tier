@@ -4,17 +4,17 @@ using System.Linq;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
-    internal class AddressManager : AbstractManager<Address>
+    internal class AddressServiceGateway : AbstractServiceGateway<Address>
     {
-        private static AddressManager _instance;
+        private static AddressServiceGateway _instance;
 
-        private AddressManager()
+        private AddressServiceGateway()
         {
         }
 
-        public static AddressManager Instance => _instance ?? (_instance = new AddressManager());
+        public static AddressServiceGateway Instance => _instance ?? (_instance = new AddressServiceGateway());
 
         public override Address Create(MovieShopContext db, Address address)
         {

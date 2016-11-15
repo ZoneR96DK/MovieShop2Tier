@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
     public class RandomisedMovieManager
     {

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
-using MovieShopDLL.Managers;
+using MovieShopDLL.ServiceGateways;
 using MovieShopUser.Models;
 using PagedList;
 
@@ -20,8 +20,8 @@ namespace MovieShopUser.Controllers
     public class MoviesController : Controller
     {
         private int NUMBER_OF_TABLE_ITEMS_PER_PAGE = 5;
-        private IManager<Movie> _mm = DllFacade.GetMovieManager();
-        private IManager<Genre> _gm = DllFacade.GetGenreManager();
+        private IServiceGateway<Movie> _mm = DllFacade.GetMovieManager();
+        private IServiceGateway<Genre> _gm = DllFacade.GetGenreManager();
 
         // GET: Movie
         // Paged site with search filter and genre filter. This also get data for 5 random films displayed on the top of the page.

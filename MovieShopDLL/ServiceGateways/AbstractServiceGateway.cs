@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using MovieShopDLL.Context;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
-    internal abstract class AbstractManager<T> : IManager<T>
+    internal abstract class AbstractServiceGateway<T> : IServiceGateway<T>
     {
         public T Create(T item)
         {

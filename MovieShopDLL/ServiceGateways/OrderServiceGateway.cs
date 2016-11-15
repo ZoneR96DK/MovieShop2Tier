@@ -4,17 +4,17 @@ using System.Linq;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.Managers
+namespace MovieShopDLL.ServiceGateways
 {
-    internal class OrderManager : AbstractManager<Order>
+    internal class OrderServiceGateway : AbstractServiceGateway<Order>
     {
-        private static OrderManager _instance;
+        private static OrderServiceGateway _instance;
 
-        private OrderManager()
+        private OrderServiceGateway()
         {
         }
 
-        public static OrderManager Instance => _instance ?? (_instance = new OrderManager());
+        public static OrderServiceGateway Instance => _instance ?? (_instance = new OrderServiceGateway());
 
         public override Order Create(MovieShopContext db, Order order)
         {

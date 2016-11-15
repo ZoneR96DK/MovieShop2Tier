@@ -7,7 +7,7 @@ namespace MovieShopAdmin.Controllers
 {
     public class GenresController : Controller
     {
-        private readonly IManager<Genre> _gm = DllFacade.GetGenreManager();
+        private readonly IServiceGateway<Genre> _gm = DllFacade.GetGenreManager();
 
         // GET: Genres
         public ActionResult Index()

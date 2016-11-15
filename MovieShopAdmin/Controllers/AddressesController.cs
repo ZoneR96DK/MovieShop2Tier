@@ -7,8 +7,8 @@ namespace MovieShopAdmin.Controllers
 {
     public class AddressesController : Controller
     {
-        private readonly IManager<Address> _am = DllFacade.GetAddressManager();
-        private readonly IManager<Customer> _cm = DllFacade.GetCustomerManager();
+        private readonly IServiceGateway<Address> _am = DllFacade.GetAddressManager();
+        private readonly IServiceGateway<Customer> _cm = DllFacade.GetCustomerManager();
 
         // GET: Addresses
         public ActionResult Index()

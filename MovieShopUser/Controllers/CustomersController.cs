@@ -17,10 +17,10 @@ namespace MovieShopUser.Controllers
     {
         private string _isInfoValid;
         private string _isEmailValid;
-        private IManager<Customer> _cm = DllFacade.GetCustomerManager();
-        private IManager<Address> _am = DllFacade.GetAddressManager();
-        private IManager<Movie> _mm = DllFacade.GetMovieManager();
-        private IManager<Order> _om = DllFacade.GetOrderManager();
+        private IServiceGateway<Customer> _cm = DllFacade.GetCustomerManager();
+        private IServiceGateway<Address> _am = DllFacade.GetAddressManager();
+        private IServiceGateway<Movie> _mm = DllFacade.GetMovieManager();
+        private IServiceGateway<Order> _om = DllFacade.GetOrderManager();
         
         //GET method for getting screen with email input
         //We check for id and return appropriate CheckView 
