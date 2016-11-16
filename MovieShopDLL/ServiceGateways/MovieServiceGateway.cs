@@ -9,7 +9,7 @@ using MovieShopDLL.Entities;
 
 namespace MovieShopDLL.ServiceGateways
 {
-    public class MovieServiceGateway //: AbstractServiceGateway<Movie>
+    internal class MovieServiceGateway : AbstractServiceGateway<Movie>
     {
         private static MovieServiceGateway _instance;
 
@@ -19,83 +19,44 @@ namespace MovieShopDLL.ServiceGateways
 
         public static MovieServiceGateway Instance => _instance ?? (_instance = new MovieServiceGateway());
 
-        public Movie Create(Movie movie)
+        public override Movie Create(HttpClient client, Movie movie)
         {
-            using (var client = new HttpClient())
+            HttpResponseMessage response = client.PostAsJsonAsync("api/movies", movie).Result;
+            if (response.IsSuccessStatusCode)
             {
-                client.BaseAddress = new Uri("http://localhost:52395/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = client.PostAsJsonAsync("api/movies", movie).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Movie>().Result;
-                }
-                return null;
+                return response.Content.ReadAsAsync<Movie>().Result;
             }
+            return null;
         }
 
-        public Movie Read(int id)
+        public override Movie Read(HttpClient client, int id)
         {
-            using (var client = new HttpClient())
+            var response = client.GetAsync($"api/movies/{id}").Result;
+            if (response.IsSuccessStatusCode)
             {
-                client.BaseAddress = new Uri("http://localhost:52395/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var response = client.GetAsync($"api/movies/{id}").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Movie>().Result;
-                }
-                return null;
+                return response.Content.ReadAsAsync<Movie>().Result;
             }
+            return null;
         }
 
-        public List<Movie> Read()
+        public override List<Movie> Read(HttpClient client)
         {
-            using (var client = new HttpClient())
+            var response = client.GetAsync("/api/movies").Result;
+            if (response.IsSuccessStatusCode)
             {
-                client.BaseAddress = new Uri("http://localhost:52395/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var response = client.GetAsync("/api/movies").Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<List<Movie>>().Result;
-                }
+                return response.Content.ReadAsAsync<List<Movie>>().Result;
             }
             return new List<Movie>();
         }
 
-        //public Movie Update(Movie movie)
-        //{
-        //    db.Entry(movie).State = EntityState.Modified;
-        //    db.SaveChanges();
-        //    return movie;
-        //}
+        public override Movie Update(HttpClient client, Movie movie)
+        {
+            throw new NotImplementedException();
+        }
 
-        //public void Delete(int id)
-        //{
-        //    using (var client = new HttpClient())
-        //    {
-        //        client.BaseAddress = new Uri("http://localhost:1922/");
-        //        client.DefaultRequestHeaders.Accept.Clear();
-        //        client.DefaultRequestHeaders.Accept.Add(
-        //            new MediaTypeWithQualityHeaderValue("application/json"));
-
-        //        var response = client.DeleteAsync($"/api/movies/{id}").Result;
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            return response.Content.ReadAsAsync<Movie>().Result != null;
-        //        }
-        //        return false;
-        //    }
-        //}
+        public override void Delete(HttpClient client, int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

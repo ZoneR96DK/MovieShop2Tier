@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using MovieShopDLL.Context;
+using MovieShopDLL.Entities;
 
 namespace MovieShopDLL.ServiceGateways
 {
@@ -7,54 +11,77 @@ namespace MovieShopDLL.ServiceGateways
     {
         public T Create(T item)
         {
-            using (var db = new MovieShopContext())
+            using (var client = new HttpClient())
             {
-                var addedItem = Create(db, item);
-                db.SaveChanges();
-                return addedItem;
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return Create(client, item);
             }
         }
 
         public T Read(int id)
         {
-            using (var db = new MovieShopContext())
+            using (var client = new HttpClient())
             {
-                return Read(db, id);
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return Read(client, id);
             }
         }
 
         public List<T> Read()
         {
-            using (var db = new MovieShopContext())
+            using (var client = new HttpClient())
             {
-                return Read(db);
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return Read(client);
             }
         }
 
         public T Update(T item)
         {
-            using (var db = new MovieShopContext())
+            using (var client = new HttpClient())
             {
-                return Update(db, item);
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return Update(client, item);
             }
         }
 
         public void Delete(int id)
         {
-            using (var db = new MovieShopContext())
+            using (var client = new HttpClient())
             {
-                Delete(db, id);
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Delete(client, id);
             }
         }
 
-        public abstract T Create(MovieShopContext db, T item);
+        public abstract T Create(HttpClient client, T item);
 
-        public abstract T Read(MovieShopContext db, int id);
+        public abstract T Read(HttpClient client, int id);
 
-        public abstract List<T> Read(MovieShopContext db);
+        public abstract List<T> Read(HttpClient client);
 
-        public abstract T Update(MovieShopContext db, T item);
+        public abstract T Update(HttpClient client, T item);
 
-        public abstract void Delete(MovieShopContext db, int id);
+        public abstract void Delete(HttpClient client, int id);
     }
 }
