@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -16,34 +18,44 @@ namespace MovieShopDLL.ServiceGateways
 
         public static AddressServiceGateway Instance => _instance ?? (_instance = new AddressServiceGateway());
 
-        public override Address Create(MovieShopContext db, Address address)
+        public override Address Create(HttpClient client, Address address)
         {
-            db.Addresses.Add(address);
-            db.SaveChanges();
-            return address;
+            HttpResponseMessage response = client.PostAsJsonAsync("api/addresss", address).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Address>().Result;
+            }
+            return null;
         }
 
-        public override Address Read(MovieShopContext db, int id)
+        public override Address Read(HttpClient client, int id)
         {
-            return db.Addresses.Include(a => a.Customer).FirstOrDefault(x => x.Id == id);
+            var response = client.GetAsync($"api/addresss/{id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Address>().Result;
+            }
+            return null;
         }
 
-        public override List<Address> Read(MovieShopContext db)
+        public override List<Address> Read(HttpClient client)
         {
-            return db.Addresses.Include(a => a.Customer).ToList();
+            var response = client.GetAsync("/api/addresss").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<List<Address>>().Result;
+            }
+            return new List<Address>();
         }
 
-        public override Address Update(MovieShopContext db, Address address)
+        public override Address Update(HttpClient client, Address address)
         {
-            db.Entry(address).State = EntityState.Modified;
-            db.SaveChanges();
-            return address;
+            throw new NotImplementedException();
         }
 
-        public override void Delete(MovieShopContext db, int id)
+        public override void Delete(HttpClient client, int id)
         {
-            db.Entry(db.Addresses.FirstOrDefault(x => x.Id == id)).State = EntityState.Deleted;
-            db.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

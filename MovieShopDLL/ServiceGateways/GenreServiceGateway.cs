@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -16,34 +18,44 @@ namespace MovieShopDLL.ServiceGateways
 
         public static GenreServiceGateway Instance => _instance ?? (_instance = new GenreServiceGateway());
 
-        public override Genre Create(MovieShopContext db, Genre genre)
+        public override Genre Create(HttpClient client, Genre genre)
         {
-            db.Genres.Add(genre);
-            db.SaveChanges();
-            return genre;
+            HttpResponseMessage response = client.PostAsJsonAsync("api/genres", genre).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Genre>().Result;
+            }
+            return null;
         }
 
-        public override Genre Read(MovieShopContext db, int id)
+        public override Genre Read(HttpClient client, int id)
         {
-            return db.Genres.FirstOrDefault(x => x.Id == id);
+            var response = client.GetAsync($"api/genres/{id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Genre>().Result;
+            }
+            return null;
         }
 
-        public override List<Genre> Read(MovieShopContext db)
+        public override List<Genre> Read(HttpClient client)
         {
-            return db.Genres.ToList();
+            var response = client.GetAsync("/api/genres").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<List<Genre>>().Result;
+            }
+            return new List<Genre>();
         }
 
-        public override Genre Update(MovieShopContext db, Genre genre)
+        public override Genre Update(HttpClient client, Genre genre)
         {
-            db.Entry(genre).State = EntityState.Modified;
-            db.SaveChanges();
-            return genre;
+            throw new NotImplementedException();
         }
 
-        public override void Delete(MovieShopContext db, int id)
+        public override void Delete(HttpClient client, int id)
         {
-            db.Entry(db.Genres.FirstOrDefault(x => x.Id == id)).State = EntityState.Deleted;
-            db.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }
