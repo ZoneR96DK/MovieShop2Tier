@@ -20,8 +20,8 @@ namespace MovieShopUser.Controllers
     public class MoviesController : Controller
     {
         private int NUMBER_OF_TABLE_ITEMS_PER_PAGE = 5;
-        private IServiceGateway<Movie> _mm = DllFacade.GetMovieManager();
-        private IServiceGateway<Genre> _gm = DllFacade.GetGenreManager();
+        private MovieServiceGateway _mm = DllFacade.GetMovieServiceGateway();
+        private IServiceGateway<Genre> _gm = DllFacade.GetGenreServiceGateway();
 
         // GET: Movie
         // Paged site with search filter and genre filter. This also get data for 5 random films displayed on the top of the page.

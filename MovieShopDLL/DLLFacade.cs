@@ -17,22 +17,22 @@ namespace MovieShopDLL
             return GenreServiceGateway.Instance;
         }
 
-        public static IServiceGateway<Movie> GetMovieManager()
+        public static MovieServiceGateway GetMovieServiceGateway()
         {
             return MovieServiceGateway.Instance;
         }
 
-        public static IServiceGateway<Customer> GetCustomerManager()
+        public static IServiceGateway<Customer> GetCustomerServiceGateway()
         {
             return CustomerServiceGateway.Instance;
         }
 
-        public static IServiceGateway<Order> GetOrderManager()
+        public static IServiceGateway<Order> GetOrderServiceGateway()
         {
             return OrderServiceGateway.Instance;
         }
 
-        public static IServiceGateway<Address> GetAddressManager()
+        public static IServiceGateway<Address> GetAddressServiceGateway()
         {
             return AddressServiceGateway.Instance;
         }

@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
 namespace MovieShopDLL.ServiceGateways
 {
-    internal class MovieServiceGateway : AbstractServiceGateway<Movie>
+    public class MovieServiceGateway //: AbstractServiceGateway<Movie>
     {
         private static MovieServiceGateway _instance;
 
@@ -16,34 +19,83 @@ namespace MovieShopDLL.ServiceGateways
 
         public static MovieServiceGateway Instance => _instance ?? (_instance = new MovieServiceGateway());
 
-        public override Movie Create(MovieShopContext db, Movie movie)
+        public Movie Create(Movie movie)
         {
-            db.Movies.Add(movie);
-            db.SaveChanges();
-            return movie;
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.PostAsJsonAsync("api/movies", movie).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsAsync<Movie>().Result;
+                }
+                return null;
+            }
         }
 
-        public override Movie Read(MovieShopContext db, int id)
+        public Movie Read(int id)
         {
-            return db.Movies.Include(m => m.Genre).FirstOrDefault(x => x.Id == id);
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = client.GetAsync($"api/movies/{id}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsAsync<Movie>().Result;
+                }
+                return null;
+            }
         }
 
-        public override List<Movie> Read(MovieShopContext db)
+        public List<Movie> Read()
         {
-            return db.Movies.Include(m => m.Genre).ToList();
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:52395/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var response = client.GetAsync("/api/movies").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsAsync<List<Movie>>().Result;
+                }
+            }
+            return new List<Movie>();
         }
 
-        public override Movie Update(MovieShopContext db, Movie movie)
-        {
-            db.Entry(movie).State = EntityState.Modified;
-            db.SaveChanges();
-            return movie;
-        }
+        //public Movie Update(Movie movie)
+        //{
+        //    db.Entry(movie).State = EntityState.Modified;
+        //    db.SaveChanges();
+        //    return movie;
+        //}
 
-        public override void Delete(MovieShopContext db, int id)
-        {
-            db.Entry(db.Movies.FirstOrDefault(x => x.Id == id)).State = EntityState.Deleted;
-            db.SaveChanges();
-        }
+        //public void Delete(int id)
+        //{
+        //    using (var client = new HttpClient())
+        //    {
+        //        client.BaseAddress = new Uri("http://localhost:1922/");
+        //        client.DefaultRequestHeaders.Accept.Clear();
+        //        client.DefaultRequestHeaders.Accept.Add(
+        //            new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //        var response = client.DeleteAsync($"/api/movies/{id}").Result;
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return response.Content.ReadAsAsync<Movie>().Result != null;
+        //        }
+        //        return false;
+        //    }
+        //}
     }
 }
