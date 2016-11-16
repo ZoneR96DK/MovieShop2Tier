@@ -50,12 +50,19 @@ namespace MovieShopDLL.ServiceGateways
 
         public override Genre Update(HttpClient client, Genre genre)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = client.PutAsJsonAsync($"api/products/{genre.Id}", genre).Result;
+            response.EnsureSuccessStatusCode();
+
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Genre>().Result;
+            }
+            return null;
         }
 
         public override void Delete(HttpClient client, int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = client.DeleteAsync($"api/genre/{id}").Result;
         }
     }
 }
