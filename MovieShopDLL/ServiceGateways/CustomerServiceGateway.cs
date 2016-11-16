@@ -41,7 +41,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override List<Customer> Read(HttpClient client)
         {
-            var response = client.GetAsync("/api/cutomers").Result;
+            var response = client.GetAsync("/api/customers").Result;
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<List<Customer>>().Result;
