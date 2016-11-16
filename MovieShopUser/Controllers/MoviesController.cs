@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using MovieShopDLL;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
+using MovieShopDLL.Logic;
 using MovieShopDLL.ServiceGateways;
 using MovieShopUser.Models;
 using PagedList;
@@ -42,8 +43,8 @@ namespace MovieShopUser.Controllers
             int pageSize = NUMBER_OF_TABLE_ITEMS_PER_PAGE;
             int pageNumber = (page ?? 1);
 
-            
-            RandomisedMovieManager randomMovieManager = RandomisedMovieManager.Instance;
+
+            MovieRandomizer randomMovieManager = MovieRandomizer.Instance;
             var movieViewModel = new MovieViewModel()
             {
                 RandomMovies = randomMovieManager.PickFiveRandomFilms(),

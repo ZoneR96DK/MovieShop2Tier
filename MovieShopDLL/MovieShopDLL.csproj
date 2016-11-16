@@ -74,7 +74,7 @@
     <Compile Include="ServiceGateways\GenreServiceGateway.cs" />
     <Compile Include="ServiceGateways\MovieServiceGateway.cs" />
     <Compile Include="ServiceGateways\OrderServiceGateway.cs" />
-    <Compile Include="ServiceGateways\RandomisedMovieServiceGateway.cs" />
+    <Compile Include="Logic\MovieRandomizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

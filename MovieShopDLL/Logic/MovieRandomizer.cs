@@ -4,15 +4,15 @@ using System.Linq;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
-namespace MovieShopDLL.ServiceGateways
+namespace MovieShopDLL.Logic
 {
-    public class RandomisedMovieManager
+    public class MovieRandomizer
     {
-        private static RandomisedMovieManager _instance;
+        private static MovieRandomizer _instance;
 
-        public static RandomisedMovieManager Instance => _instance ?? (_instance = new RandomisedMovieManager());
+        public static MovieRandomizer Instance => _instance ?? (_instance = new MovieRandomizer());
 
-        private RandomisedMovieManager() { }
+        private MovieRandomizer() { }
 
         public List<Movie> PickFiveRandomFilms()
         {
