@@ -19,45 +19,44 @@ namespace MovieShopDLL.ServiceGateways
 
         public static CustomerServiceGateway Instance => _instance ?? (_instance = new CustomerServiceGateway());
 
-        public override Customer Create(MovieShopContext db, Customer customer)
+        public override Customer Create(HttpClient client, Customer customer)
         {
-            using (var client = new HttpClient())
+            HttpResponseMessage response = client.PostAsJsonAsync("api/customers", customer).Result;
+            if (response.IsSuccessStatusCode)
             {
-                client.BaseAddress = new Uri("http://localhost:52395/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = client.PostAsJsonAsync("api/customers", customer).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return response.Content.ReadAsAsync<Customer>().Result;
-                }
-                return null;
+                return response.Content.ReadAsAsync<Customer>().Result;
             }
+            return null;
         }
 
-        public override Customer Read(MovieShopContext db, int id)
+        public override Customer Read(HttpClient client, int id)
         {
-            return db.Customers.Include(c => c.Address).FirstOrDefault(x => x.Id == id);
+            HttpResponseMessage response = client.GetAsync($"api/customers/{id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<Customer>().Result;
+            }
+            return null;
         }
 
-        public override List<Customer> Read(MovieShopContext db)
+        public override List<Customer> Read(HttpClient client)
         {
-            return db.Customers.Include(c => c.Address).ToList();
+            var response = client.GetAsync("/api/sutomers").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Content.ReadAsAsync<List<Customer>>().Result;
+            }
+            return new List<Customer>();
         }
 
-       /* public override Customer Update(MovieShopContext db, Customer customer)
+        public override Customer Update(HttpClient client, Customer customer)
         {
-            db.Entry(customer).State = EntityState.Modified;
-            db.SaveChanges();
-            return customer;
+            throw new NotImplementedException();
         }
 
-        public override void Delete(MovieShopContext db, int id)
+        public override void Delete(HttpClient client, int id)
         {
-            db.Entry(db.Customers.FirstOrDefault(x => x.Id == id)).State = EntityState.Deleted;
-            db.SaveChanges();
-        }*/
+            throw new NotImplementedException();
+        }
     }
 }
