@@ -20,7 +20,7 @@ namespace MovieShopUser.Controllers
     public class MoviesController : Controller
     {
         private int NUMBER_OF_TABLE_ITEMS_PER_PAGE = 5;
-        private MovieServiceGateway _mm = DllFacade.GetMovieServiceGateway();
+        private IServiceGateway<Movie> _mm = DllFacade.GetMovieServiceGateway();
         private IServiceGateway<Genre> _gm = DllFacade.GetGenreServiceGateway();
 
         // GET: Movie

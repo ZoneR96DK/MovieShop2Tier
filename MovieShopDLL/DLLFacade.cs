@@ -17,7 +17,7 @@ namespace MovieShopDLL
             return GenreServiceGateway.Instance;
         }
 
-        public static MovieServiceGateway GetMovieServiceGateway()
+        public static IServiceGateway<Movie> GetMovieServiceGateway()
         {
             return MovieServiceGateway.Instance;
         }
