@@ -67,7 +67,6 @@
     <Compile Include="Entities\Movie.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="IServiceGateway.cs" />
-    <Compile Include="Logic\CurrencyConverter.cs" />
     <Compile Include="ServiceGateways\AbstractServiceGateway.cs" />
     <Compile Include="ServiceGateways\AddressServiceGateway.cs" />
     <Compile Include="ServiceGateways\CustomerServiceGateway.cs" />
