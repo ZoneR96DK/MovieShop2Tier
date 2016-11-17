@@ -16,23 +16,25 @@ namespace MovieShopUser.Models
 
         public static Currency currency;
 
-        public void Setcurrency(Currency money)
+        /*public void Setcurrency(Currency money)
         {
             currency = money;
-        }
+        }*/
 
         public double Convert(double price)
         {
             if (currency == Currency.USD)
             {
-                double USDprice = price / USD;
-                return USDprice;
+                double USDprice = price * USD;
+                
+                return Math.Round(USDprice, 2); ;
             }
 
             if (currency == Currency.EUR)
             {
-                double EURprice = price / EUR;
-                return EURprice;
+                double EURprice = price * EUR;
+                
+                return Math.Round(EURprice, 2);
             }
             else
                 return price;
