@@ -92,19 +92,11 @@ namespace MovieShopUser.Controllers
             var priceInAnotherCurrency = 0.00;
             if (currency == null)
             {
-                currencyConverter.SetCurrency(Currency.DKK);
+                currencyConverter.SetCurrency("DKK");
             }
-            else if (currency.Equals("DKK"))
+            else
             {
-                currencyConverter.SetCurrency(Currency.DKK);
-            }
-            else if (currency.Equals("USD"))
-            {
-                currencyConverter.SetCurrency(Currency.USD);
-            }
-            else if (currency.Equals("EUR"))
-            {
-                currencyConverter.SetCurrency(Currency.EUR);
+                currencyConverter.SetCurrency(currency);
             }
             priceInAnotherCurrency = currencyConverter.Convert(movie.Price);
 

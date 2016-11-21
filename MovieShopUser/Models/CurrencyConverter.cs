@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace MovieShopUser.Models
@@ -24,9 +26,9 @@ namespace MovieShopUser.Models
         public static Currency currency;
         
 
-        public void SetCurrency(Currency money)
+        public void SetCurrency(string money)
         {
-            currency = money;
+            currency = (Currency) TypeDescriptor.GetConverter(typeof(Currency)).ConvertFromString(money);
         }
 
         public double Convert(double price)
