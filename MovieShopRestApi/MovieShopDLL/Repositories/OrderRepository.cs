@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using MovieShopDLL.Context;
 using MovieShopDLL.Entities;
 
@@ -8,6 +9,7 @@ namespace MovieShopDLL.Repositories
 {
     internal class OrderRepository : AbstractRepository<Order>
     {
+        
         private static OrderRepository _instance;
 
         private OrderRepository()
@@ -15,12 +17,14 @@ namespace MovieShopDLL.Repositories
         }
 
         public static OrderRepository Instance => _instance ?? (_instance = new OrderRepository());
+        
 
         public override Order Create(MovieShopContext db, Order order)
         {
-            db.Entry(order.Customer).State = EntityState.Unchanged;
-            db.Entry(order.Movie).State = EntityState.Unchanged;
-            db.Entry(order.Customer.Address).State = EntityState.Unchanged;
+            //db.Entry(order.Customer).State = EntityState.Unchanged;
+            //db.Entry(order.Movie).State = EntityState.Unchanged;
+            //db.Entry(order.Customer.Address).State = EntityState.Unchanged;
+
             db.Orders.Add(order);
             db.SaveChanges();
             return order;

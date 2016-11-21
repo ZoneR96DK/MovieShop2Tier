@@ -41,7 +41,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override List<Movie> Read(HttpClient client)
         {
-            var response = client.GetAsync("/api/movies").Result;
+            var response = client.GetAsync("api/movies").Result;
             if (response.IsSuccessStatusCode)
             {
                 return response.Content.ReadAsAsync<List<Movie>>().Result;
@@ -51,7 +51,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override Movie Update(HttpClient client, Movie movie)
         {
-            HttpResponseMessage response = client.PutAsJsonAsync($"api/products/{movie.Id}", movie).Result;
+            HttpResponseMessage response = client.PutAsJsonAsync($"api/movies/{movie.Id}", movie).Result;
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -63,7 +63,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override void Delete(HttpClient client, int id)
         {
-            HttpResponseMessage response = client.DeleteAsync($"api/movie/{id}").Result;
+            HttpResponseMessage response = client.DeleteAsync($"api/movies/{id}").Result;
         }
     }
 }

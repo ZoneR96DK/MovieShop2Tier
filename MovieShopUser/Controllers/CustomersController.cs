@@ -25,7 +25,7 @@ namespace MovieShopUser.Controllers
         //GET method for getting screen with email input
         //We check for id and return appropriate CheckView 
         //THere are two options - in case we have tempdata true (invalid email input)
-        public ActionResult CheckEmail(int? id)
+        public ActionResult CheckEmail(int? id, string currencyTochange)
         {
             if (id == null)
             {
@@ -36,15 +36,25 @@ namespace MovieShopUser.Controllers
             {
                 return HttpNotFound();
             }
+            
+            
+            MovieWithPricesModel movieWithPricesModel = new MovieWithPricesModel()
+            {
+                CurrencyConverter = new CurrencyConverter(),
+                CurrencyToChange = currencyTochange,
+                Movie = movie,
+                
+            };
             if (TempData["RedirectedEmail"] != null)
             {
                 _isEmailValid = "Submit a valid email.";
                 ViewBag.Message = _isEmailValid;
-                return View(movie);
+                
+                return View(movieWithPricesModel);
             }
             _isEmailValid = "";
             ViewBag.Message = _isEmailValid;
-            return View(movie);
+            return View(movieWithPricesModel);
         }
 
         //Validation for email. This could be moved and implemented inside DLL package in next versions.
@@ -110,11 +120,21 @@ namespace MovieShopUser.Controllers
             {
                 if (customerId != null)
                 {
+                    Customer orderingCust = null;
+                    orderingCust = customer;
+                    orderingCust.Address = address;
+                    orderingCust.Address.Id = customerId.Value;
+                    orderingCust.Id = customerId.Value;
                     _om.Create(new Order()
                     {
                         CustomerId = customerId.Value,
                         MovieId = movieId,
+                        Customer = orderingCust,
+                        
+                        Movie = _mm.Read(movieId),
                         Date = DateTime.Now
+                        
+
                     });
                     Address addressToUpdate = _am.Read(customerId.Value);
                     addressToUpdate = address;

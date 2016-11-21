@@ -1,11 +1,11 @@
-﻿@model MovieShopDLL.Entities.Movie
+﻿@model MovieShopUser.Models.MovieWithPricesModel
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 my-header">
-            @if (@Model.TrailerUrl != null)
+            @if (@Model.Movie.TrailerUrl != null)
             {
-                <h2 class="h2-frontIndexUser">Watch trailer for @Model.Title <a href="@Model.TrailerUrl" target="_blank">here</a>.
+                <h2 class="h2-frontIndexUser">Watch trailer for @Model.Movie.Title <a href="@Model.Movie.TrailerUrl" target="_blank">here</a>.
                 </h2>
             }
             else
@@ -26,30 +26,44 @@
     <div class="row">
         <table class="col-md-12">
             <tr>
-                <th class="col-md-2" rowspan="4"><img src="@Model.ImageUrl" /></th>
-                <th class="col-md-1">@Html.DisplayNameFor(model => model.Title)</th>
-                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Title)</td>
+                <th class="col-md-2" rowspan="4"><img src="@Model.Movie.ImageUrl" /></th>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Movie.Title)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Movie.Title)</td>
             </tr>
             <tr>
-                <th class="col-md-1">@Html.DisplayNameFor(model => model.Year)</th>
-                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Year.Year)</td>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Movie.Year)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Movie.Year.Year)</td>
             </tr>
             <tr>
-                <th class="col-md-1">@Html.DisplayNameFor(model => model.Genre)</th>
-                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Genre.Name)</td>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Movie.Genre)</th>
+                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Movie.Genre.Name)</td>
             </tr>
             <tr>
-                <th class="col-md-1">@Html.DisplayNameFor(model => model.Price)</th>
-                <td class="col-md-9 text-left">@Html.DisplayFor(model => model.Price)</td>
+                <th class="col-md-1">@Html.DisplayNameFor(model => model.Movie.Price)</th>
+                <td class="col-md-9 text-left">@Model.valueOfCurrency @if(@Model.CurrencyToChange == null){@Html.Raw("DKK")} else {@Model.CurrencyToChange}</td>
             </tr>
             <tr>
                 <td colspan="3" class="col-md-12 text-right"><p>
                     <button type="button" class="btn btn-default">@Html.ActionLink("Back to List", "Index")</button>
-                    <a href="../../Customers/CheckEmail/@Model.Id" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> Buy this film</a>
                     
-</p></td>
+                    <a href="../../Customers/CheckEmail/@Model.Movie.Id" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-shopping-cart"></span> Buy this film</a>
+                    
+                </td>
             </tr>
         </table>
+        
+        <form action="@Model.Movie.Id" method="GET">
+            <select id="currency" name="currency">
+                @foreach (var currency in Model.CurrencyConverter.currencies)
+                {
+                    <option value="@currency">@currency.ToString()</option>
+                }
+
+
+            </select>
+
+            <input type="submit" value="Change Currency">
+        </form>
     </div>
 </div><br/><br/>
 

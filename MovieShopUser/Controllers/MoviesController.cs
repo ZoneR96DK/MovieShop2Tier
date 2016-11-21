@@ -38,24 +38,29 @@ namespace MovieShopUser.Controllers
             }
 
             ViewBag.CurrentSort = searchString;
-            List<Movie> movies = _mm.Read();
+            List<Movie> movies = _mm.Read(
+                );
             
             int pageSize = NUMBER_OF_TABLE_ITEMS_PER_PAGE;
             int pageNumber = (page ?? 1);
 
 
             MovieRandomizer randomMovieManager = MovieRandomizer.Instance;
+            
             var movieViewModel = new MovieViewModel()
             {
                 RandomMovies = randomMovieManager.PickFiveRandomFilms(),
-                Genres = _gm.Read()
-            };
+                Genres = _gm.Read(),
+                
+                
+             };
+            
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 var stringFilter = movies.Where(x => x.Title.ToLower().Contains(searchString.ToLower())).ToPagedList(pageNumber, pageSize);
                 movieViewModel.MoviesForTable = stringFilter;
-                if(genreId != null) { 
+                if(genreId != null) {
                     movieViewModel.MoviesForTable = stringFilter.Where(x => x.Genre.Id == genreId.Value).ToPagedList(pageNumber, pageSize);
                 }
                 return View(movieViewModel);
@@ -71,7 +76,7 @@ namespace MovieShopUser.Controllers
 
         // GET: Movie/Details/5
         //GET method for Details.
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, string currency)
         {
             if (id == null)
             {
@@ -82,7 +87,59 @@ namespace MovieShopUser.Controllers
             {
                 return HttpNotFound();
             }
-            return View(movie);
+            
+            var currencyConverter = new CurrencyConverter();
+            var priceInAnotherCurrency = 0.00;
+            if (currency == null)
+            {
+                currencyConverter.SetCurrency(Currency.DKK);
+            }
+            else if (currency.Equals("DKK"))
+            {
+                currencyConverter.SetCurrency(Currency.DKK);
+            }
+            else if (currency.Equals("USD"))
+            {
+                currencyConverter.SetCurrency(Currency.USD);
+            }
+            else if (currency.Equals("EUR"))
+            {
+                currencyConverter.SetCurrency(Currency.EUR);
+            }
+            priceInAnotherCurrency = currencyConverter.Convert(movie.Price);
+
+            //var changeRate = 0.00;
+            //if (currency == null)
+            //{
+            //    changeRate = 1.00;
+            //}
+            //else if (currency.Equals("DKK"))
+            //{
+            //    changeRate = 1.00;
+            //}
+            //else if (currency.Equals("USD"))
+            //{
+            //    changeRate = 0.143797;
+            //}
+            //else if (currency.Equals("EUR"))
+            //{
+            //    changeRate = 0.134377161;
+            //}
+
+            var movieWithPricesModel = new MovieWithPricesModel()
+            {
+                CurrencyConverter = currencyConverter,
+                CurrencyToChange = currency,
+                //ChangingRate = changeRate,
+                Movie = movie,
+                valueOfCurrency = priceInAnotherCurrency
+            };
+
+            
+
+
+            return View(movieWithPricesModel);
         }
     }
 }
+

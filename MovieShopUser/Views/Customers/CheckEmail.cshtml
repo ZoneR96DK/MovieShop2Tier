@@ -1,4 +1,4 @@
-﻿@model MovieShopDLL.Entities.Movie
+﻿@model MovieShopUser.Models.MovieWithPricesModel
 
 <link rel="stylesheet" type="text/css" href="../../Content/verifyEmail.css"> 
 
@@ -17,7 +17,8 @@
                         <label for="email" class="cols-sm-2 control-label">Your Email</label>
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                <input type="hidden" value="@Model.Id" name="movieId"/>
+                                <input type="hidden" value="@Model.Movie.Id" name="movieId"/>
+
                                 <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
                             </div>
                             <small class="text-danger">@ViewBag.Message</small>

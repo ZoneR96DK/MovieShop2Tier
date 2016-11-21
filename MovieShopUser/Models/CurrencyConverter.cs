@@ -8,18 +8,26 @@ namespace MovieShopUser.Models
 
     public enum Currency { DKK, USD, EUR };
 
+
+
     public class CurrencyConverter
     {
+        public List<Currency> currencies = Enum.GetValues(typeof(Currency)).Cast<Currency>().ToList();
+
+
+
+
         
         public readonly double USD = 0.143797;
         public readonly double EUR = 0.134377161;
 
         public static Currency currency;
+        
 
-        /*public void Setcurrency(Currency money)
+        public void SetCurrency(Currency money)
         {
             currency = money;
-        }*/
+        }
 
         public double Convert(double price)
         {

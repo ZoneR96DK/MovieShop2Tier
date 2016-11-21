@@ -51,7 +51,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override Customer Update(HttpClient client, Customer customer)
         {
-            HttpResponseMessage response = client.PutAsJsonAsync($"api/products/{customer.Id}", customer).Result;
+            HttpResponseMessage response = client.PutAsJsonAsync($"api/customers/{customer.Id}", customer).Result;
             response.EnsureSuccessStatusCode();
 
             if (response.IsSuccessStatusCode)
@@ -63,7 +63,7 @@ namespace MovieShopDLL.ServiceGateways
 
         public override void Delete(HttpClient client, int id)
         {
-            HttpResponseMessage response = client.DeleteAsync($"api/customer/{id}").Result;
+            HttpResponseMessage response = client.DeleteAsync($"api/customers/{id}").Result;
         }
     }
 }
